@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Assistant Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sophisticated Background -->
+    <div class="bg-wrapper">
+        <div class="gradient-bg"></div>
+        <div class="mesh-gradient"></div>
+    </div>
+
+    <!-- Welcome Screen -->
+    <div id="welcomeScreen" class="welcome-container">
+        <div class="welcome-content">
+            <div class="brand-logo">
+                <svg width="48" height="48" viewBox="0 0 48 48" fill="none">
+                    <circle cx="24" cy="24" r="20" stroke="url(#gradient)" stroke-width="2"/>
+                    <circle cx="24" cy="24" r="12" fill="url(#gradient)"/>
+                    <defs>
+                        <linearGradient id="gradient" x1="0" y1="0" x2="48" y2="48">
+                            <stop offset="0%" stop-color="#6366f1"/>
+                            <stop offset="100%" stop-color="#a855f7"/>
+                        </linearGradient>
+                    </defs>
+                </svg>
+            </div>
+            <h1 class="brand-title">AI Assistant Pro</h1>
+            <p class="brand-subtitle">Advanced intelligence at your fingertips</p>
+            
+            <div class="welcome-form">
+                <label class="input-label">Enter your name to begin</label>
+                <input type="text" id="nameInput" class="premium-input" placeholder="Your name" autocomplete="off">
+                <button id="startBtn" class="premium-btn">
+                    <span>Get Started</span>
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M7 10L13 10M13 10L10 7M13 10L10 13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main App -->
+    <div id="mainApp" class="app-container" style="display: none;">
+        <!-- Mobile Overlay -->
+        <div id="sidebarOverlay" class="sidebar-overlay"></div>
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="brand-logo-small">
+                    <svg width="32" height="32" viewBox="0 0 48 48" fill="none">
+                        <circle cx="24" cy="24" r="20" stroke="url(#gradient2)" stroke-width="2"/>
+                        <circle cx="24" cy="24" r="12" fill="url(#gradient2)"/>
+                        <defs>
+                            <linearGradient id="gradient2" x1="0" y1="0" x2="48" y2="48">
+                                <stop offset="0%" stop-color="#6366f1"/>
+                                <stop offset="100%" stop-color="#a855f7"/>
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                </div>
+                <span class="brand-text">AI Pro</span>
+                <!-- Close button for mobile -->
+                <button id="closeSidebarBtn" class="close-sidebar-btn">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                        <path d="M6 6L18 18M6 18L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+            </div>
+
+            <div class="sidebar-user">
+                <div class="user-avatar">
+                    <span id="userInitial">U</span>
+                </div>
+                <div class="user-details">
+                    <span id="userNameSidebar" class="user-name">User</span>
+                    <span class="user-status">● Online</span>
+                </div>
+            </div>
+
+            <nav class="sidebar-nav">
+                <button class="nav-item active">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M3 10L10 3L17 10M5 8V17H8V13H12V17H15V8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <span>Chat</span>
+                </button>
+                <button id="newChatBtn" class="nav-item">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M10 5V15M5 10H15" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <span>New Chat</span>
+                </button>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="clearChatBtn" class="footer-btn">
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                        <path d="M4 6H16M8 3H12M8 17H12M6 6V16C6 16.5 6.5 17 7 17H13C13.5 17 14 16.5 14 16V6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                    </svg>
+                    <span>Clear Chat</span>
+                </button>
+                <button id="logoutBtn" class="footer-btn">
+                    <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                        <path d="M13 3H16C16.5523 3 17 3.44772 17 4V16C17 16.5523 16.5523 17 16 17H13M9 7L13 10M13 10L9 13M13 10H3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="app-header">
+                <div class="header-left">
+                    <!-- Mobile menu button -->
+                    <button id="menuBtn" class="menu-btn">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                            <path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+                    <h2 class="header-title">Assistant</h2>
+                </div>
+                <!-- FIND THIS SECTION IN YOUR index.html (around line 88-95) -->
+<!-- REPLACE the header-right div with this updated version: -->
+
+<div class="header-right">
+    <span class="status-badge with-memory">
+        AI Online
+    </span>
+    <span class="memory-badge">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 9v6M9 12h6"/>
+        </svg>
+        Memory Active
+    </span>
+</div>
+            </header>
+
+            <!-- Chat Area -->
+            <div class="chat-area">
+                <div id="chatMessages" class="messages-container"></div>
+            </div>
+
+            <!-- Input Area -->
+            <div class="input-section">
+                <div class="input-wrapper">
+                    <button id="voiceBtn" class="action-btn" title="Voice Input">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M10 2C8.3 2 7 3.3 7 5V10C7 11.7 8.3 13 10 13C11.7 13 13 11.7 13 10V5C13 3.3 11.7 2 10 2Z" stroke="currentColor" stroke-width="1.5"/>
+                            <path d="M5 10C5 12.8 7.2 15 10 15C12.8 15 15 12.8 15 10M10 15V18M7 18H13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+
+                    <input 
+                        type="text" 
+                        id="messageInput" 
+                        class="message-input" 
+                        placeholder="Type your message..."
+                        autocomplete="off"
+                    >
+
+                    <button id="imageBtn" class="action-btn" title="Generate Image">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <rect x="3" y="3" width="14" height="14" rx="2" stroke="currentColor" stroke-width="1.5"/>
+                            <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+                            <path d="M3 14L7 10L10 13L14 9L17 12V15C17 15.5 16.5 16 16 16H4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+                        </svg>
+                    </button>
+
+                    <button id="sendBtn" class="send-btn">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M3 10L17 3L10 17L9 11L3 10Z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+
+                <!-- Image Panel -->
+                <div id="imagePanel" class="image-panel" style="display: none;">
+                    <input 
+                        type="text" 
+                        id="imagePrompt" 
+                        class="image-input" 
+                        placeholder="Describe the image you want to create..."
+                        autocomplete="off"
+                    >
+                    <button id="generateImageBtn" class="generate-btn">
+                        <svg width="18" height="18" viewBox="0 0 20 20" fill="none">
+                            <path d="M10 3V7M10 13V17M7 10H3M17 10H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        </svg>
+                        <span>Generate</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Loading -->
+    <div id="loadingIndicator" class="loading-overlay" style="display: none;">
+        <div class="loading-spinner">
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+            <div class="spinner-ring"></div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

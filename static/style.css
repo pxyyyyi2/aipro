@@ -512,6 +512,9 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .header-left {
@@ -656,6 +659,7 @@ body {
     background: rgba(26, 11, 46, 0.8);
     backdrop-filter: blur(20px);
     border-top: 2px solid rgba(255, 128, 191, 0.2);
+    
 }
 
 .input-wrapper {
@@ -874,12 +878,25 @@ body {
 
     .chat-area {
         padding: 20px 15px;
+        padding-bottom: 120px; /* input ke liye space */
+         overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
     }
 
     .input-section {
         padding: 15px;
+         position: sticky;
+        bottom: 0;
+        z-index: 100;
     }
 }
+
+@supports (height: 100dvh) {
+    .app-container {
+        height: 100dvh;
+    }
+}
+
 
 /* 🎯 Typing Indicator */
 .typing-indicator-message {

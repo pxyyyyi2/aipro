@@ -1051,7 +1051,7 @@ body {
     /* Chat Area */
     .chat-area {
         padding: 15px 12px;
-        padding-bottom: 20px;
+        padding-bottom: 100px;
     }
 
     .message {
@@ -1076,25 +1076,51 @@ body {
     .input-section {
         padding: 12px;
         padding-bottom: max(12px, env(safe-area-inset-bottom, 12px));
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        z-index: 200;
+        background: rgba(26, 11, 46, 0.98);
     }
 
     .input-wrapper {
         gap: 8px;
+        width: 100%;
+        max-width: 100%;
     }
 
     .message-input {
         font-size: 14px;
         padding: 12px 16px;
-        min-height: 42px;
+        min-height: 44px;
+        flex: 1;
     }
 
-    .action-btn,
-    .send-btn {
-        width: 42px;
-        height: 42px;
-        min-width: 42px;
-        min-height: 42px;
+    .action-btn {
+        width: 44px;
+        height: 44px;
+        min-width: 44px;
+        min-height: 44px;
         flex-shrink: 0;
+    }
+
+    .send-btn {
+        width: 44px !important;
+        height: 44px !important;
+        min-width: 44px !important;
+        min-height: 44px !important;
+        flex-shrink: 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 20px !important;
+    }
+
+    /* Chat area ko input ke liye space */
+    .chat-area {
+        padding-bottom: 100px;
     }
 
     /* Image Panel */

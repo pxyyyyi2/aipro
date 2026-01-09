@@ -1,5 +1,12 @@
 /* 🌸 Anime Style CSS - Japanese Aesthetic */
 
+html, body {
+  height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -295,7 +302,8 @@ body {
 /* 🎮 Main App Container */
 .app-container {
     display: flex;
-    height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
     position: relative;
     z-index: 10;
 }
@@ -1019,6 +1027,10 @@ body {
   /* Header */
   .app-header {
     padding: 14px 16px;
+      position: sticky;
+  top: 0;
+  z-index: 300;
+
   }
 
   .header-title {
@@ -1039,6 +1051,10 @@ body {
   /* Chat area */
   .chat-area {
     padding: 12px 10px;
+     flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 140px;
   }
 
   .message {
@@ -1060,6 +1076,9 @@ body {
   /* Input Section */
   .input-section {
     padding: 10px;
+     position: sticky;
+  bottom: 0;
+  z-index: 300;
   }
 
   .input-wrapper {
@@ -1086,4 +1105,25 @@ body {
     width: 100%;
     justify-content: center;
   }
+}
+/* 📱 FIX INPUT BAR & SEND ICON CUT ISSUE */
+.input-section {
+  position: sticky;
+  bottom: 0;
+  z-index: 200;
+  padding-bottom: calc(10px + env(safe-area-inset-bottom));
+}
+
+/* Android fallback */
+@supports not (padding: env(safe-area-inset-bottom)) {
+  .input-section {
+    padding-bottom: 20px;
+  }
+}
+.send-btn {
+  flex-shrink: 0;
+}
+.input-wrapper {
+  align-items: center;
+  overflow: visible;
 }

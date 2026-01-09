@@ -691,7 +691,8 @@ body {
     margin: 0 auto;
     display: flex;
     gap: 10px;
-    align-items: flex-end;
+    align-items: center;
+    overflow: visible;
 }
 
 .action-btn {
@@ -708,6 +709,7 @@ body {
     justify-content: center;
     transition: all 0.3s ease;
     flex-shrink: 0;
+    overflow: visible;
 }
 
 .action-btn:hover {
@@ -751,7 +753,7 @@ body {
     background: linear-gradient(135deg, #ff80bf, #a855f7);
     border: none;
     color: #fff;
-    font-size: 22px;
+    font-size: 20px;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -759,6 +761,7 @@ body {
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(255, 128, 191, 0.4);
     flex-shrink: 0;
+    overflow: visible;
 }
 
 .send-btn:hover {

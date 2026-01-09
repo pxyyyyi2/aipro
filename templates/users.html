@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users - AI Assistant</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        .users-container {
+            padding: 2rem;
+            max-width: 900px;
+            margin: 0 auto;
+            min-height: 100vh;
+        }
+        
+        .users-header {
+            margin-bottom: 2rem;
+        }
+        
+        .users-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #818cf8, #c084fc, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .users-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.125rem;
+        }
+        
+        .back-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            text-decoration: none;
+            transition: transform 0.3s;
+            margin-bottom: 2rem;
+        }
+        
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.5);
+        }
+        
+        .stats-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary-light), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+        
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+        }
+        
+        .users-list {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+        
+        .list-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+        
+        .user-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            margin-bottom: 0.75rem;
+            transition: all 0.3s;
+        }
+        
+        .user-item:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateX(5px);
+        }
+        
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: white;
+            flex-shrink: 0;
+        }
+        
+        .user-info {
+            flex: 1;
+        }
+        
+        .user-name {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        
+        .user-time {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+        
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-wrapper">
+        <div class="gradient-bg"></div>
+        <div class="mesh-gradient"></div>
+    </div>
+
+    <div class="users-container">
+        <a href="/" class="back-btn">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                <path d="M15 10H5M5 10L10 15M5 10L10 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            Back to Chat
+        </a>
+
+        <div class="users-header">
+            <h1 class="users-title">👥 Users</h1>
+            <p class="users-subtitle">People who have used AI Assistant</p>
+        </div>
+
+        <div class="stats-card">
+            <div class="stat-number" id="totalUsers">0</div>
+            <div class="stat-label">Total Users</div>
+        </div>
+
+        <div class="users-list">
+            <h3 class="list-title">📝 All Users</h3>
+            <div id="usersList">
+                <div class="empty-state">
+                    <div class="empty-icon">🤷</div>
+                    <p>No users yet. Be the first to use the AI Assistant!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load all users from localStorage
+        function loadUsers() {
+            // Get all stored user names
+            const usersData = localStorage.getItem('allUsers');
+            let users = [];
+            
+            if (usersData) {
+                users = JSON.parse(usersData);
+            }
+            
+            // Update total count
+            document.getElementById('totalUsers').textContent = users.length;
+            
+            // Display users list
+            const usersList = document.getElementById('usersList');
+            
+            if (users.length === 0) {
+                usersList.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🤷</div>
+                        <p>No users yet. Be the first to use the AI Assistant!</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sort by most recent first
+            users.sort((a, b) => new Date(b.lastSeen) - new Date(a.lastSeen));
+            
+            usersList.innerHTML = users.map(user => {
+                const initial = user.name.charAt(0).toUpperCase();
+                const timeAgo = getTimeAgo(new Date(user.lastSeen));
+                
+                return `
+                    <div class="user-item">
+                        <div class="user-avatar">${initial}</div>
+                        <div class="user-info">
+                            <div class="user-name">${user.name}</div>
+                            <div class="user-time">Last seen ${timeAgo}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        // Calculate time ago
+        function getTimeAgo(date) {
+            const seconds = Math.floor((new Date() - date) / 1000);
+            
+            if (seconds < 60) return 'just now';
+            if (seconds < 3600) return `${Math.floor(seconds / 60)} minutes ago`;
+            if (seconds < 86400) return `${Math.floor(seconds / 3600)} hours ago`;
+            if (seconds < 604800) return `${Math.floor(seconds / 86400)} days ago`;
+            return date.toLocaleDateString();
+        }
+        
+        // Load users on page load
+        loadUsers();
+        
+        // Auto-refresh every 10 seconds
+        setInterval(loadUsers, 10000);
+    </script>
+</body>
+</html>

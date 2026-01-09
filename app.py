@@ -293,6 +293,12 @@ def greeting():
 def health():
     return jsonify({'status': 'healthy', 'timestamp': datetime.now().isoformat()})
 
+
+@app.route('/users')
+def users_page():
+    """Simple users list page"""
+    return render_template('users.html')
+
 if __name__ == '__main__':
     # Get port from environment variable (Render sets this automatically)
     port = int(os.environ.get('PORT', 5000))

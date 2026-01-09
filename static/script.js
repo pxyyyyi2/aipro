@@ -198,6 +198,9 @@ function skipWelcomeScreen() {
     userNameSidebar.textContent = userName;
     userInitial.textContent = userName.charAt(0).toUpperCase();
     
+    // 👇 ADD THIS LINE HERE
+    trackUser(userName);
+    
     welcomeScreen.style.display = 'none';
     mainApp.style.display = 'flex';
     
@@ -245,8 +248,11 @@ startBtn.addEventListener('click', async () => {
     userNameSidebar.textContent = userName;
     userInitial.textContent = userName.charAt(0).toUpperCase();
     
+    // 👇 ADD THIS LINE HERE
+    trackUser(userName);
+    
     welcomeScreen.style.opacity = '0';
-    welcomeScreen.style.transform = 'scale(0.95)';
+    // ... rest of code
     
     setTimeout(() => {
         welcomeScreen.style.display = 'none';
@@ -1066,6 +1072,51 @@ async function clearBackendMemory(chatId) {
         console.error('Failed to clear backend memory:', error);
     }
 }
+
+function trackUser(userName) {
+    try {
+        // Get existing users
+        const usersData = localStorage.getItem('allUsers');
+        let users = [];
+        
+        if (usersData) {
+            users = JSON.parse(usersData);
+        }
+        
+        // Check if user already exists
+        const existingUser = users.find(u => u.name === userName);
+        
+        if (existingUser) {
+            // Update last seen time
+            existingUser.lastSeen = new Date().toISOString();
+        } else {
+            // Add new user
+            users.push({
+                name: userName,
+                firstSeen: new Date().toISOString(),
+                lastSeen: new Date().toISOString()
+            });
+        }
+        
+        // Save back to localStorage
+        localStorage.setItem('allUsers', JSON.stringify(users));
+        
+        console.log(`✅ User tracked: ${userName}`);
+    } catch (error) {
+        console.error('Failed to track user:', error);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 console.log('🚀 AI Assistant Pro loaded successfully!');

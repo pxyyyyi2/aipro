@@ -761,6 +761,8 @@ body {
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(255, 128, 191, 0.4);
     flex-shrink: 0;
+    font-size: 24px;
+    line-height: 1;
 }
 
 .send-btn:hover {
@@ -1098,14 +1100,6 @@ body {
     }
 
     .action-btn {
-        width: 44px;
-        height: 44px;
-        min-width: 44px;
-        min-height: 44px;
-        flex-shrink: 0;
-    }
-
-    .send-btn {
         width: 44px !important;
         height: 44px !important;
         min-width: 44px !important;
@@ -1115,7 +1109,22 @@ body {
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        font-size: 20px !important;
+        font-size: 18px !important;
+    }
+
+    .send-btn {
+        width: 48px !important;
+        height: 48px !important;
+        min-width: 48px !important;
+        min-height: 48px !important;
+        flex-shrink: 0 !important;
+        padding: 0 !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 24px !important;
+        line-height: 1 !important;
+        border-radius: 12px !important;
     }
 
     /* Chat area ko input ke liye space */

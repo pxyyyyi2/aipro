@@ -1,3 +1,54 @@
+// 🌸 ANIME EFFECTS - Add at the top after variable declarations
+
+// ✨ Create Twinkling Stars
+function createStars() {
+    const starsContainer = document.getElementById('starsContainer');
+    if (!starsContainer) return;
+    
+    const starCount = 100;
+    
+    for (let i = 0; i < starCount; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        const size = Math.random() * 3 + 1;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.setProperty('--duration', (Math.random() * 3 + 2) + 's');
+        star.style.animationDelay = Math.random() * 3 + 's';
+        starsContainer.appendChild(star);
+    }
+}
+
+// 🌸 Create Falling Sakura Petals
+function createSakura() {
+    const sakuraContainer = document.getElementById('sakuraContainer');
+    if (!sakuraContainer) return;
+    
+    const petalCount = 30;
+    
+    for (let i = 0; i < petalCount; i++) {
+        const petal = document.createElement('div');
+        petal.className = 'sakura';
+        petal.style.left = Math.random() * 100 + '%';
+        petal.style.animationDuration = (Math.random() * 10 + 10) + 's';
+        petal.style.animationDelay = Math.random() * 5 + 's';
+        petal.style.opacity = (Math.random() * 0.5 + 0.5).toString();
+        const size = Math.random() * 8 + 12;
+        petal.style.width = size + 'px';
+        petal.style.height = size + 'px';
+        sakuraContainer.appendChild(petal);
+    }
+}
+
+// Initialize anime effects on load
+window.addEventListener('DOMContentLoaded', () => {
+    createStars();
+    createSakura();
+});
+
+
 // Enhanced AI Assistant - JavaScript with Chat History & Persistent Name
 let userName = '';
 let recognition = null;
@@ -5,64 +56,6 @@ let isListening = false;
 let currentChatId = null;
 let chatHistory = [];
 const MAX_CHATS = 5;
-
-// 🎨 THEME SYSTEM DATA
-const themes = [
-    {
-        id: 'dark-purple',
-        name: 'Dark Purple',
-        description: 'Classic dark theme with purple gradients',
-        colors: ['#6366f1', '#a855f7', '#ec4899']
-    },
-    {
-        id: 'cyberpunk',
-        name: 'Cyberpunk Neon',
-        description: 'Futuristic hot pink and electric blue',
-        colors: ['#ff0080', '#00f0ff', '#ffff00']
-    },
-    {
-        id: 'pastel',
-        name: 'Pastel Dream',
-        description: 'Soft dreamy aesthetic colors',
-        colors: ['#f7a8d8', '#c4b5fd', '#a8d8ff']
-    },
-    {
-        id: 'aurora',
-        name: 'Aurora Borealis',
-        description: 'Northern lights magical shimmer',
-        colors: ['#7c3aed', '#14b8a6', '#10b981']
-    },
-    {
-        id: 'tokyo',
-        name: 'Tokyo Night',
-        description: 'Japanese city lights aesthetic',
-        colors: ['#ff007c', '#7c3aed', '#3b82f6']
-    },
-    {
-        id: 'rose-gold',
-        name: 'Rose Gold Luxury',
-        description: 'Premium elegant rose gold',
-        colors: ['#e8b4b8', '#daa520', '#ff6b9d']
-    },
-    {
-        id: 'tropical',
-        name: 'Tropical Paradise',
-        description: 'Fresh beach sunset vibes',
-        colors: ['#06b6d4', '#f97316', '#facc15']
-    },
-    {
-        id: 'monochrome',
-        name: 'Monochrome Elegance',
-        description: 'Minimalist black and white',
-        colors: ['#ffffff', '#9ca3af', '#6b7280']
-    },
-    {
-        id: 'candy',
-        name: 'Candy Pop',
-        description: 'Sweet playful kawaii',
-        colors: ['#ff69b4', '#87ceeb', '#98ff98']
-    }
-];
 
 // Mobile Sidebar Toggle Elements
 const menuBtn = document.getElementById('menuBtn');
@@ -169,7 +162,7 @@ const sidebarNav = document.querySelector('.sidebar-nav');
 window.addEventListener('load', () => {
     loadUserData();
     loadChatHistory();
-    initThemeSystem(); // 🎨 Initialize theme system
+    //initThemeSystem(); // 🎨 Initialize theme system
     
     const savedName = localStorage.getItem('userName');
     if (savedName) {
@@ -889,15 +882,7 @@ document.addEventListener('keydown', (e) => {
         }
     }
     
-    if (e.key === 'Escape') {
-        if (imagePanel.style.display === 'flex') {
-            imagePanel.style.display = 'none';
-        }
-        const themeOverlay = document.getElementById('themeSelectorOverlay');
-        if (themeOverlay && themeOverlay.classList.contains('active')) {
-            closeThemeSelector();
-        }
-    }
+ 
 });
 
 // Clear backend memory
@@ -918,138 +903,10 @@ async function clearBackendMemory(chatId) {
 // ========================================
 
 // Load saved theme on startup
-function loadTheme() {
-    const savedTheme = localStorage.getItem('selectedTheme') || 'dark-purple';
-    applyTheme(savedTheme);
-}
 
-// Apply theme
-function applyTheme(themeId) {
-    document.documentElement.setAttribute('data-theme', themeId);
-    localStorage.setItem('selectedTheme', themeId);
-    updateActiveTheme(themeId);
-}
 
-// Update active theme card
-function updateActiveTheme(themeId) {
-    const themeCards = document.querySelectorAll('.theme-card');
-    themeCards.forEach(card => {
-        if (card.dataset.theme === themeId) {
-            card.classList.add('active');
-        } else {
-            card.classList.remove('active');
-        }
-    });
-}
 
-// Create theme selector modal
-function createThemeSelector() {
-    const overlay = document.createElement('div');
-    overlay.className = 'theme-selector-overlay';
-    overlay.id = 'themeSelectorOverlay';
-    
-    const modal = document.createElement('div');
-    modal.className = 'theme-selector-modal';
-    
-    modal.innerHTML = `
-        <div class="theme-modal-header">
-            <h2 class="theme-modal-title">🎨 Choose Your Theme</h2>
-            <button class="theme-close-btn" id="closeThemeSelector">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path d="M6 6L18 18M6 18L18 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                </svg>
-            </button>
-        </div>
-        <div class="themes-grid" id="themesGrid"></div>
-    `;
-    
-    overlay.appendChild(modal);
-    document.body.appendChild(overlay);
-    
-    // Populate themes
-    const grid = document.getElementById('themesGrid');
-    themes.forEach(theme => {
-        const card = document.createElement('div');
-        card.className = 'theme-card';
-        card.dataset.theme = theme.id;
-        card.style.setProperty('--theme-color-1', theme.colors[0]);
-        card.style.setProperty('--theme-color-2', theme.colors[1]);
-        card.style.setProperty('--theme-color-3', theme.colors[2]);
-        
-        card.innerHTML = `
-            <div class="theme-preview" style="background: linear-gradient(135deg, ${theme.colors[0]}, ${theme.colors[1]}, ${theme.colors[2]})"></div>
-            <div class="theme-name">${theme.name}</div>
-            <div class="theme-description">${theme.description}</div>
-        `;
-        
-        card.addEventListener('click', () => {
-            applyTheme(theme.id);
-            closeThemeSelector();
-        });
-        
-        grid.appendChild(card);
-    });
-    
-    // Update active theme
-    const currentTheme = localStorage.getItem('selectedTheme') || 'dark-purple';
-    updateActiveTheme(currentTheme);
-    
-    // Close button
-    document.getElementById('closeThemeSelector').addEventListener('click', closeThemeSelector);
-    overlay.addEventListener('click', (e) => {
-        if (e.target === overlay) {
-            closeThemeSelector();
-        }
-    });
-}
 
-// Open theme selector
-function openThemeSelector() {
-    const overlay = document.getElementById('themeSelectorOverlay');
-    if (overlay) {
-        overlay.classList.add('active');
-    } else {
-        createThemeSelector();
-        setTimeout(() => {
-            document.getElementById('themeSelectorOverlay').classList.add('active');
-        }, 10);
-    }
-}
-
-// Close theme selector
-function closeThemeSelector() {
-    const overlay = document.getElementById('themeSelectorOverlay');
-    if (overlay) {
-        overlay.classList.remove('active');
-    }
-}
-
-// Add theme button to sidebar
-function addThemeButton() {
-    const themeBtn = document.createElement('button');
-    themeBtn.className = 'theme-btn';
-    themeBtn.innerHTML = `
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <circle cx="12" cy="12" r="5" stroke="currentColor" stroke-width="2"/>
-            <path d="M12 1v6m0 6v6M23 12h-6m-6 0H1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <span>Themes</span>
-    `;
-    
-    themeBtn.addEventListener('click', openThemeSelector);
-    
-    // Insert before sidebar footer
-    const sidebarFooter = document.querySelector('.sidebar-footer');
-    if (sidebarFooter) {
-        sidebarFooter.parentNode.insertBefore(themeBtn, sidebarFooter);
-    }
-}
-
-// Initialize theme system
-function initThemeSystem() {
-    loadTheme();
-    addThemeButton();
-}
 
 console.log('🚀 AI Assistant Pro loaded successfully!');
 console.log('💡 Keyboard shortcuts:');
@@ -1061,17 +918,7 @@ console.log(`📊 Chat limit: ${MAX_CHATS} chats maximum`);
 
 
 // Clear backend memory
-async function clearBackendMemory(chatId) {
-    try {
-        await fetch('/api/clear-memory', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chatId: chatId })
-        });
-    } catch (error) {
-        console.error('Failed to clear backend memory:', error);
-    }
-}
+
 
 function trackUser(userName) {
     try {
